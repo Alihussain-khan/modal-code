@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Modal Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- IMPORTANT: relative path with ./ -->
+  <style>
+:root {
+  --backdrop: rgba(0, 0, 0, 0.7);
+  --surface: #111;
+  --text: #f5f5f5;
+}
+
+/* Page demo styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #222;
+  background: #d6d6d6;
+}
+.container {
+  max-width: 900px;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+.thumb {
+  display: block;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  transition: transform 0.15s ease;
+}
+.thumb:hover { transform: translateY(-2px); }
+
+/* Modal base */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;              /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.is-open {
+  display: flex;              /* shown when open */
+}
+
+/* Dark backdrop */
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--backdrop);
+}
+
+/* Dialog */
+.modal__dialog {
+  position: relative;
+  z-index: 1;
+  max-width: min(90vw, 820px);
+  width: 100%;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  overflow: hidden;
+}
+
+/* Header / Title */
+.modal__title {
+  margin: 0;
+  padding: 1rem 3rem 0.5rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+/* Content */
+.modal__content {
+  padding: 0 1.25rem 1.25rem;
+}
+.modal__image {
+  display: block;
+  width: 200px;
+  height:200px;
+  border-radius: 300px;
+}
+
+/* Close button */
+.modal__close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 1.75rem;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+.modal__close:hover {
+  transform: scale(1.1);
+  color: var(--accent);
+}
+
+/* Spin animation for the image */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 4s linear infinite;
+}
+
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>Demo: Modal with Spinning Image</h1>
+    <p><a href="#" id="openModalLink">Open Modal (link)</a></p>
+    <img id="openModalImage" src="https://picsum.photos/id/237/300/200" alt="Click to open modal" class="thumb" />
+  </main>
+
+  <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal__backdrop" data-close="backdrop"></div>
+    <div class="modal__dialog" role="document">
+      <button class="modal__close" type="button" aria-label="Close modal">&times;</button>
+      <h2 id="modalTitle" class="modal__title">Spinning Image</h2>
+      <div class="modal__content">
+        <img class="modal__image spin" src="https://picsum.photos/id/1025/600/400" alt="Spinning dog image" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Load jQuery first -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+  <!-- Local fallback in case CDN is blocked/offline -->
+  <script>
+    if (!window.jQuery) {
+      document.write('<script src="./jquery-3.7.1.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- Then your script (after jQuery). Using defer is fine here. -->
+  <script src="./script.js" defer></script>
+</body>
+</html>
